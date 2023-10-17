@@ -7,6 +7,7 @@ const rooms: Room[] = [];
 const getChatInfoFromUrl = new GetChatInfoFromUrl();
 
 const server = Bun.serve<{username: string, roomId: string}>({
+  port: 80,
   fetch(req, server) {
     const url = new URL(req.url);
     const response = getChatInfoFromUrl.get(url);
