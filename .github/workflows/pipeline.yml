@@ -9,3 +9,5 @@ jobs:
       - uses: oven-sh/setup-bun@v1
       - run: bun install
       - run: bun test
+    env:
+      TERM: xterm-256color
