@@ -1,5 +1,5 @@
-import Message from "./Message";
-import User from "./User";
+import Message from "../Datastructure/Message";
+import User from "../Datastructure/User";
 
 class Room {
     private id: string;
@@ -28,6 +28,10 @@ class Room {
 
     public addUser(user: User): void {
         this.users.push(user);
+    }
+
+    public removeUser(username: string): void {
+        this.users = this.users.filter(user => user.getDisplayName() != username);
     }
 
     public getMessages(): Message[] {
