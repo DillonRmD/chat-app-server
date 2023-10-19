@@ -15,7 +15,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.AWSACCESS }}
           SOURCE: "./"
-          REMOTE_HOST: "https://ec2-3-16-150-103.us-east-2.compute.amazonaws.com/"
+          REMOTE_HOST: " ec2-3-16-150-103.us-east-2.compute.amazonaws.com/"
           REMOTE_USER: "ubuntu"
           TARGET: "/home/ubuntu/PipelineTest"
 
