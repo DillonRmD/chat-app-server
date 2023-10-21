@@ -15,7 +15,7 @@ jobs:
     name: build
     runs-on: self-hosted
     steps:
-      - uses: actions/checkvout@v3
+      - uses: actions/checkout@v3
       - uses: oven-sh/setup-bun@v1
       - run: bun build --compile ./src/main.ts --outfile=chat-server
     
