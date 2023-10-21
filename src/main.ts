@@ -1,25 +1,15 @@
 import Room from "./BusinessObject/Room";
-import CreateRoom from "./Domain/Usecase/CreateRoom";
-import CreateUser from "./Domain/Usecase/CreateUser";
-import { GetChatInfoFromUrl } from "./Domain/Usecase/GetChatInfoFromUrl";
-
-
-const rooms: Room[] = [];
-const getChatInfoFromUrl = new GetChatInfoFromUrl();
-const createRoom = new CreateRoom();
-const createUser = new CreateUser();
 
 const server = Bun.serve<{username: string, roomId: string}>({
   port: 443,
   fetch(req, server) {
     const url = new URL(req.url);
-    const response = getChatInfoFromUrl.get(url);
-    if (!response.getIsValid()) {
+    const username = url.searchParams.get("username");
+    const roomId = url.searchParams.get("roomId");
+    if (!username || !roomId) {
       return new Response("Invalid HTTP Request", { status: 401 });
     }
 
-    const username = response.getUsername();
-    const roomId = response.getRoomId();
     const successfulUpgrade = server.upgrade(req, {data : { username, roomId }});
     return successfulUpgrade
       ? undefined
@@ -27,15 +17,8 @@ const server = Bun.serve<{username: string, roomId: string}>({
   },
   websocket: {
     open(ws) {
-      const newUser = createUser.create(ws.data.username);
-
-      let room = rooms.find((room: Room) => room.getId() === ws.data.roomId);
-      if (!room) {
-        console.log('Creating new room...');
-        room = createRoom.create(ws.data.roomId);
-        room.addUser(newUser);
-        rooms.push(room);
-      }
+      const room = new Room();
+      room.setId('Test');
       
       ws.subscribe(room.getId());
       server.publish(room.getId(), `${ws.data.username} has entered the chat`);
@@ -44,9 +27,6 @@ const server = Bun.serve<{username: string, roomId: string}>({
       server.publish(ws.data.roomId, `${ws.data.username}: ${message}`);
     },
     close(ws) {
-      const room = rooms.find((room: Room) => room.getId() === ws.data.roomId);
-      room?.removeUser(ws.data.username);
-
       ws.unsubscribe(ws.data.roomId);
       server.publish(ws.data.roomId, `${ws.data.username} has left the chat`);
     },

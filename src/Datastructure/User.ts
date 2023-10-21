@@ -1,21 +1,26 @@
 class User {
-    private id: number = -1;
-    private displayName: string = '';
+    private id: string;
+    private username: string;
 
-    public getId(): number {
+    constructor(username: string) {
+        this.id = 'TestId';
+        this.username = username;
+    }
+
+    public getId(): string {
         return this.id;
     }
 
-    public setId(id: number): void {
+    public setId(id: string): void {
         this.id = id;
     }
 
-    public getDisplayName(): string {
-        return this.displayName;
+    public getUsername(): string {
+        return this.username;
     }
 
-    public setDisplayName(displayName: string): void {
-        this.displayName = displayName;
+    public setUsername(username: string): void {
+        this.username = username;
     }
 }
 

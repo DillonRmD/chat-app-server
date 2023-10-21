@@ -1,20 +1,20 @@
 import User from "./User";
 
 class Message {
-    private content: string;
-    private user: User;
+    public author: User;
+    public content: string;
 
-    constructor(content: string, user: User) {
-        this.user = user;
+    constructor(content: string, author: User) {
         this.content = content;
+        this.author = author;
     }
 
-    public getUser(): User {
-        return this.user;
+    public getAuthor(): User {
+        return this.author;
     }
 
-    public setUser(user: User): void {
-        this.user = user;
+    public setAuthor(author: User): void {
+        this.author = author;
     }
 
     public getContent(): string {

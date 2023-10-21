@@ -31,7 +31,7 @@ class Room {
     }
 
     public removeUser(username: string): void {
-        this.users = this.users.filter(user => user.getDisplayName() != username);
+        this.users = this.users.filter(user => user.getUsername() != username);
     }
 
     public getMessages(): Message[] {
