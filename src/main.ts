@@ -1,7 +1,7 @@
 import Room from "./BusinessObject/Room";
 
 const server = Bun.serve<{username: string, roomId: string}>({
-  port: 443,
+  port: 3000,
   fetch(req, server) {
     const url = new URL(req.url);
     const username = url.searchParams.get("username");
@@ -18,7 +18,7 @@ const server = Bun.serve<{username: string, roomId: string}>({
   websocket: {
     open(ws) {
       const room = new Room();
-      room.setId('Test');
+      room.setId(ws.data.roomId);
       
       ws.subscribe(room.getId());
       server.publish(room.getId(), `${ws.data.username} has entered the chat`);
