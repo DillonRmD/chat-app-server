@@ -1,7 +1,7 @@
 import Room from "./BusinessObject/Room";
 
 const server = Bun.serve<{username: string, roomId: string}>({
-  port: 3000,
+  port: 8080,
   fetch(req, server) {
     const url = new URL(req.url);
     const username = url.searchParams.get("username");
